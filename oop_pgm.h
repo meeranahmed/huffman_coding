@@ -14,7 +14,6 @@ class pgm{
     unsigned int cols;
     unsigned int maxVal;
     std::string format;
-    std::vector<uint8_t> grayvalues;
   private:
     void setrows(std::ifstream * stream){
         *stream>>rows;
@@ -28,12 +27,14 @@ class pgm{
     void setMaxVal (std::ifstream* stream){
         *stream>>maxVal;
     }
+    std::vector< uint8_t> grayvalues;
 
 public:
+
      unsigned int getmaxval(){
          return maxVal;
      }
-     unsigned int get_num_pixels(){
+     std::vector<short>::size_type get_num_pixels(){
          return cols*rows;
      }
      /*void setgrayvalues(std::vector<short>gv){
@@ -54,21 +55,33 @@ public:
              std::cout<< "num of pixels  "<<get_num_pixels()<<std::endl;
              setMaxVal(&s);
              std::cout<< "MAXVAL  "<< getmaxval() <<std::endl;
-             grayvalues.resize(get_num_pixels());
-             for(unsigned int i=0;i<cols*rows;i++){
-                 s >>grayvalues[i];
+             read_pgm.grayvalues.resize(get_num_pixels());
+
+
+    // read the elements in the file into a vector
+
+             for(std::vector<short>::size_type i = 0;i<read_pgm.grayvalues.size();i++){
+                 uint8_t value;
+                 s>>value;
+                 read_pgm.grayvalues.push_back(value);
+
              }
-             if(get_num_pixels()!=grayvalues.size()){
+
+             if(get_num_pixels()!=read_pgm.grayvalues.size()){
                  std::cout<<"couldn't read all pixels"<<std::endl;
              }
              else
              {
                  std::cout <<"all has been read"<<std::endl;
              }
-
+             std::cout<<read_pgm.grayvalues[1];
              return read_pgm;
 
      }
-};
 
+};
 #endif // OOP_PGM_H
+
+
+
+
