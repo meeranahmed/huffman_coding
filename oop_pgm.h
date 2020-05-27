@@ -43,7 +43,9 @@ public:
 
      pgm PGM_READ(const std::string(filepath)){
          pgm read_pgm;
-             std::ifstream s(filepath);
+         std::ifstream s;
+        //  std::ifstream s(filepath.c_str(), std::ios::in | std::ios::binary);
+         s.open(filepath,std::ios_base::binary);
              if(!s)
              {
                  std::cout << "not opened"<<std::endl;
@@ -60,10 +62,8 @@ public:
 
     // read the elements in the file into a vector
 
-             for(std::vector<short>::size_type i = 0;i<read_pgm.grayvalues.size();i++){
-                 uint8_t value;
-                 s>>value;
-                 read_pgm.grayvalues.push_back(value);
+             for(std::vector<uint8_t>::size_type i = 0;i<read_pgm.grayvalues.size();i++){
+                 s>>read_pgm.grayvalues[i];
 
              }
 
@@ -74,7 +74,7 @@ public:
              {
                  std::cout <<"all has been read"<<std::endl;
              }
-             std::cout<<read_pgm.grayvalues[1];
+             std::cout<<read_pgm.grayvalues[6];
              return read_pgm;
 
      }
