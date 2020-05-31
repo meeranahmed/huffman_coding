@@ -9,14 +9,14 @@
 #include<cstdint>
 
 class pgm{
-  private:
+private:
     unsigned int rows;
     unsigned int cols;
     unsigned int maxVal;
     std::string format;
     std::vector< char> grayvalues;
 
-  private:
+private:
     void setrows(std::ifstream * stream){
         *stream>>rows;
     }
@@ -32,53 +32,58 @@ class pgm{
 
 public:
 
-     unsigned int getmaxval(){
-         return maxVal;
-     }
-     std::vector<char>::size_type get_num_pixels(){
-         return cols*rows;
-     }
-     /*void setgrayvalues(std::vector<short>gv){
+    unsigned int getmaxval(){
+        return maxVal;
+    }
+    std::vector<char>::size_type get_num_pixels(){
+        return cols*rows;
+    }
+    /*void setgrayvalues(std::vector<short>gv){
          grayvalues=gv;
      }*/
 
-     pgm PGM_READ(const std::string(filepath)){
-         pgm read_pgm;
-         std::ifstream s;
-         s.open(filepath,std::ios_base::binary);
-             if(!s)
-             {
-                 //std::cout << "not opened"<<std::endl;
-                 return read_pgm;
-             }
-             setformat(&s);
-             setcols(&s);
-             setrows(&s);
-            // std::cout<< "num of pixels  "<<get_num_pixels()<<std::endl;
-             setMaxVal(&s);
-            // std::cout<< "MAXVAL  "<< getmaxval() <<std::endl;
-             read_pgm.grayvalues.resize(get_num_pixels());
+    pgm PGM_READ(const std::string(filepath)){
+        pgm read_pgm;
+        std::ifstream s;
+        s.open(filepath,std::ios_base::binary);
+        if(!s)
+        {
+            std::cout << "not opened"<<std::endl;
+            return read_pgm;
+        }
+        setformat(&s);
+        setcols(&s);
+        setrows(&s);
+        std::cout<< "num of pixels  "<<get_num_pixels()<<std::endl;
+        setMaxVal(&s);
+        std::cout<< "MAXVAL  "<< getmaxval() <<std::endl;
+        read_pgm.grayvalues.resize(get_num_pixels());
 
 
-    // read the elements in the file into a vector
+        // read the elements in the file into a vector
+        std::istringstream ss;
 
-             for(std::vector<char>::size_type i = 0;i<read_pgm.grayvalues.size();i++){
-                 s>>read_pgm.grayvalues[i];
+        s>>ss.rdbuf();
+      for (auto it = read_pgm.grayvalues.cbegin(); it != read_pgm.grayvalues.cend(); it++)
+        {
+            ss>>read_pgm.grayvalues[*it];
+        }
 
-             }
 
-            /* if(get_num_pixels()!=read_pgm.grayvalues.size()){
-                 std::cout<<"couldn't read all pixels"<<std::endl;
-             }
-             else
-             {
-                 std::cout <<"all has been read"<<std::endl;
-             }*/
+        if(get_num_pixels()!=read_pgm.grayvalues.size()){
+            std::cout<<"couldn't read all pixels"<<std::endl;
+        }
+        else
+        {
+            std::cout <<"all has been read"<<std::endl;
+        }
 
-            // std::cout<<read_pgm.grayvalues[6];
-             return read_pgm;
+        std::cout<<(int)read_pgm.grayvalues[5];
 
-     }
+        std::cout<<"done"<<std::endl;
+        return read_pgm;
+
+    }
 
 };
 #endif // OOP_PGM_H
