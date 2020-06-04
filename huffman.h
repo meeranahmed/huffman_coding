@@ -135,7 +135,7 @@ void buildhuffmanTree( std::unordered_map<uint8_t,int> freq_map)
     }
     /*
     //print encoded string
-    std::string st;
+
     for (char ch: im.pixels_values){
         str += huffmanCode[ch];
     }
