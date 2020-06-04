@@ -133,20 +133,20 @@ void buildhuffmanTree( std::unordered_map<uint8_t,int> freq_map)
     for (auto pair: huffmanCode){
         cout << pair.first << " " << pair.second << '\n';
     }
-    /*
-    //print encoded string
 
-    for (char ch: im.pixels_values){
-        str += huffmanCode[ch];
+    //print encoded string
+    std::string str= "";
+    for (auto ch: freq_map){
+        str += ch.second;
     }
-    cout << " \nEncoded string is :n\ " << str <<'\n';
+    cout << " \nEncoded string is :n\ " << str <<std::endl;
 
     //transverse the huffmantree again and decode the encoded string
     int top_index =-1;
     cout << " \nDecoded string is : \n ";
-    while ( top_index < (int)str.size - 2){
+    while ( top_index < (int)str.size() - 2){
         decode (root , top_index , str);
-    }*/
+    }
 
 }
 
