@@ -10,4 +10,5 @@ int main()
     std::unordered_map<uint8_t,int> Frequency = freq_map (im.pixels_values);
     buildhuffmanTree( Frequency);
 
+
 }
