@@ -7,7 +7,8 @@
 #include "oop_pgm.h"
 using namespace std;
 
-std::unordered_map<uint8_t,int> freq_map (std::vector<uint8_t> image){
+std::unordered_map<uint8_t,int> freq_map (std::vector<uint8_t> image)
+{
     std::unordered_map< uint8_t, int > pixelsfreq;
     for( unsigned int i = 0 ; i < image.size() ; ++i )
         pixelsfreq[ image[i] ]++;
