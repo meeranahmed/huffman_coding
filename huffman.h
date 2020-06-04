@@ -4,93 +4,121 @@
 #include <queue>
 #include <unordered_map>
 #include <string>
+#include "oop_pgm.h"
 using namespace std;
 
-// a tree node 
-  struct Node
+std::unordered_map<uint8_t,int> freq_map (std::vector<uint8_t> image){
+    std::unordered_map< uint8_t, int > pixelsfreq;
+    for( unsigned int i = 0 ; i < image.size() ; ++i )
+        pixelsfreq[ image[i] ]++;
+    return pixelsfreq;
+
+}
+void print_freq_map (std::unordered_map <uint8_t,int> const &m)
 {
-       char ch;
-       int freq;
-       Node *left, *right;
+    for (auto it = m.cbegin(); it != m.cend(); ++it) {
+        std::cout << "{" << (*it).first << ": " << (*it).second << std::endl;
+    }
+}
+
+void calc(std::unordered_map<uint8_t,int> const m)
+{
+    unsigned int allfreq=0;
+    for (auto it = m.cbegin(); it != m.cend(); ++it) {
+        allfreq  = allfreq + (*it).second ;
+
+    }
+    std::cout<<allfreq;
+}
+
+// a tree node
+struct Node
+{
+    uint8_t pixel;
+    int freq;
+    Node *left, *right;
 };
 
-// function to allocate a new node 
-Node* getnode (char ch, int freq, Node* left, Node* right)
+// function to allocate a new node
+Node* getnode (uint8_t pixel, int freq, Node* left, Node* right)
 {
- Node* node = new Node();
- node->ch = ch;
- node->freq = freq;
- node->left = left;
- node->right = right;
+    Node* node = new Node();
+    node->pixel = pixel;
+    node->freq = freq;
+    node->left = left;
+    node->right = right;
 
- return node; 
+    return node;
 }
 //comparison object to be used to order the heap
-struct comp 
+struct comp
 {
     bool operator()(Node* l, Node* r)
     {
-        //highest priority item has lowest frequency 
+        //highest priority item has lowest frequency
         return l->freq > r->freq;
-    
+
     }
 };
 //traverse the huffman tree and store huffman codes in a map
 void encode(Node* root, string str, unordered_map<char , string> &huffmanCode)
 {
     if (root== nullptr)
-    return;
+        return;
     // found a leaf node
     if (!root->left && !root->right)
     {
-        huffmanCode[root->ch] = str;
+        huffmanCode[root->pixel] = str;
     }
     encode(root->left , str +"0" , huffmanCode);
     encode(root->right , str + "1", huffmanCode);
 
 }
-//traverse the huffman tree and decode the encoded string 
+//traverse the huffman tree and decode the encoded string
 void decode(Node* root , int &top_index , string str)
 {
     if (root == nullptr)
-    return;
+        return;
     //found a leaf node
     if (!root->left && !root->right)
     {
-        cout<< root->ch;
+        cout<< root->pixel;
         return;
     }
     top_index++;
 
     if (str[top_index]== '0')
-    decode (root->left , top_index , str);
-    else 
-    decode (root->right, top_index, str);
+        decode (root->left , top_index , str);
+    else
+        decode (root->right, top_index, str);
 }
+
+
 // Builds Huffman tree and decode the input
-void buildhuffmanTree( char im.pixels_values)
+void buildhuffmanTree( std::unordered_map<uint8_t,int> freq_map)
 {
     //creating a priority queue to store leaf nodes of huffmantree
     priority_queue<Node* , vector<Node*> , comp >Pq;
+
     //create a leaf node for each character and add it to the priority_queue
-    for(auto pair: freq) {
+    for(auto pair: freq_map) {
         Pq.push(getnode(pair.first , pair.second , nullptr , nullptr));
     }
+
     //do it till there's more than 1 node in the queue
-    while( Pq.size != 1 )
+    while( Pq.size() != 1 )
     {
         //Removing the two nodes of the highest priority from the queue
         Node* left= Pq.top();
-        Pq.pop;
+        Pq.pop();
         Node* right= Pq.top();
-        Pq.pop;
+        Pq.pop();
 
         //create new internal node as parent of those two nodes
-        // its frequency is the sum of their frequency 
+        // its frequency is the sum of their frequency
         //add this node to the priority_queue
         int sum = left->freq + right->freq;
-        Pq.push(getn
-            dnaCounter[ im.pixels_values[i] ]++;ode( '\0' , sum , left , right)); 
+        Pq.push(getnode( '\0' , sum , left , right));
     }
 
     // root stores pointer to root of huffmantree
@@ -99,24 +127,28 @@ void buildhuffmanTree( char im.pixels_values)
     //transverse the huffmantree and store the code in the map
     unordered_map<char , string > huffmanCode;
     encode (root , "" , huffmanCode);
-    
+
     //print huffman Code
     cout << " Huffman codes are :\n" << '\n';
     for (auto pair: huffmanCode){
         cout << pair.first << " " << pair.second << '\n';
-    } 
-   
-   //print encoded string
-   for (char ch: im.pixels_values){
-       str += huffmanCode[ch];
-   }
-   cout << " \nEncoded string is :n\ " << str <<'\n';
+    }
+    /*
+    //print encoded string
+    std::string st;
+    for (char ch: im.pixels_values){
+        str += huffmanCode[ch];
+    }
+    cout << " \nEncoded string is :n\ " << str <<'\n';
 
-   //transverse the huffmantree again and decode the encoded string
-   int top_index =-1;
-   cout << " \nDecoded string is : \n ";
-   while ( top_index < (int)str.size - 2){
-       decode (root , top_index , str);
-   }
+    //transverse the huffmantree again and decode the encoded string
+    int top_index =-1;
+    cout << " \nDecoded string is : \n ";
+    while ( top_index < (int)str.size - 2){
+        decode (root , top_index , str);
+    }*/
+
 }
+
+
 #endif // HUFFMAN_H
