@@ -61,7 +61,7 @@ struct comp
     }
 };
 //traverse the huffman tree and store huffman codes in a map
-void encode(Node* root, string str, unordered_map<char , string> &huffmanCode)
+void encode(Node* root, string str, unordered_map<uint8_t , string> &huffmanCode)
 {
     if (root== nullptr)
         return;
@@ -125,15 +125,21 @@ void buildhuffmanTree( std::unordered_map<uint8_t,int> freq_map)
     Node* root = Pq.top();
 
     //transverse the huffmantree and store the code in the map
-    unordered_map<char , string > huffmanCode;
+    unordered_map<uint8_t , string > huffmanCode;
     encode (root , "" , huffmanCode);
+    print_freq_map(freq_map);
 
     //print huffman Code
     cout << " Huffman codes are :\n" << '\n';
     for (auto pair: huffmanCode){
         cout << pair.first << " " << pair.second << '\n';
     }
-
+    std::string string ="";
+    for (auto pair: huffmanCode){
+        string+=pair.second;
+    }
+    std::cout<<"bits:   "<<string<<std::endl;
+/*
     //print encoded string
     std::string str= "";
     for (auto ch: freq_map){
@@ -147,7 +153,7 @@ void buildhuffmanTree( std::unordered_map<uint8_t,int> freq_map)
     while ( top_index < (int)str.size() - 2){
         decode (root , top_index , str);
     }
-
+*/
 }
 
 
