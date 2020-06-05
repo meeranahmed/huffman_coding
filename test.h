@@ -7,8 +7,6 @@
 #include <string>
 using namespace std; 
   
-#define MAX_SIZE pgm.rows * pgm.col
-
   std::unordered_map<uint8_t,int> freq_map (std::vector<uint8_t> image)
 {
     std::unordered_map< uint8_t, int > pixelsfreq;
@@ -111,7 +109,7 @@ HuffmanTreeNode* generateTree(priority_queue<HuffmanTreeNode*,
   
 // It uses arr to store the codes 
 void printCodes(HuffmanTreeNode* root, 
-                int arr[], int top) 
+                uint8_t arr[], int top) 
 { 
     // Assign 0 to the left node and recur 
     if (root->left) { 
@@ -148,9 +146,9 @@ void HuffmanCodes(std::unordered_map<uint8_t,int> freq_map)
         pq; 
   
     // Populating the priority queue 
-    for (int i = 0; i < image.size ; i++) { 
+    for (auto x : freq_map) { 
         HuffmanTreeNode* newNode 
-            = new HuffmanTreeNode(pixel[i], freq[i]); 
+            = new HuffmanTreeNode( x.first, x.second); 
         pq.push(newNode); 
     } 
   
@@ -158,6 +156,7 @@ void HuffmanCodes(std::unordered_map<uint8_t,int> freq_map)
     HuffmanTreeNode* root = generateTree(pq); 
   
     // Print Huffman Codes 
-    int arr[MAX_SIZE], top = 0; 
+    uint8_t x = pgm.num_pixels;
+    uint8_t arr[ x ], top = 0; 
     printCodes(root, arr, top); 
 } 
