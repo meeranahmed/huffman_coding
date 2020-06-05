@@ -150,7 +150,7 @@ void HuffmanCodes(std::unordered_map<uint8_t,int> freq_map)
     // Populating the priority queue 
     for (int i = 0; i < image.size ; i++) { 
         HuffmanTreeNode* newNode 
-            = new HuffmanTreeNode(pixel[i], freq[i]); 
+            = new HuffmanTreeNode(auto x: map); 
         pq.push(newNode); 
     } 
   
