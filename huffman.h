@@ -6,9 +6,9 @@
 #include <string>
 #include "oop_pgm.h"
 using namespace std;
+#include <bitset>
 
-std::unordered_map<uint8_t,int> freq_map (std::vector<uint8_t> image)
-{
+std::unordered_map<uint8_t,int> freq_map (std::vector<uint8_t> image){
     std::unordered_map< uint8_t, int > pixelsfreq;
     for( unsigned int i = 0 ; i < image.size() ; ++i )
         pixelsfreq[ image[i] ]++;
@@ -96,7 +96,7 @@ void decode(Node* root , int &top_index , string str)
 
 
 // Builds Huffman tree and decode the input
-void buildhuffmanTree( std::unordered_map<uint8_t,int> freq_map)
+std::unordered_map<uint8_t,string> buildhuffmanTree( std::unordered_map<uint8_t,int> freq_map)
 {
     //creating a priority queue to store leaf nodes of huffmantree
     priority_queue<Node* , vector<Node*> , comp >Pq;
@@ -128,19 +128,18 @@ void buildhuffmanTree( std::unordered_map<uint8_t,int> freq_map)
     //transverse the huffmantree and store the code in the map
     unordered_map<uint8_t , string > huffmanCode;
     encode (root , "" , huffmanCode);
-    print_freq_map(freq_map);
 
     //print huffman Code
-    cout << " Huffman codes are :\n" << '\n';
+   /* cout << " Huffman codes are :\n" << '\n';
     for (auto pair: huffmanCode){
         cout << pair.first << " " << pair.second << '\n';
-    }
-    std::string string ="";
-    for (auto pair: huffmanCode){
-        string+=pair.second;
-    }
-    std::cout<<"bits:   "<<string<<std::endl;
+    }*/
+    return huffmanCode;
+}
+
+
 /*
+
     //print encoded string
     std::string str= "";
     for (auto ch: freq_map){
@@ -155,6 +154,31 @@ void buildhuffmanTree( std::unordered_map<uint8_t,int> freq_map)
         decode (root , top_index , str);
     }
 */
+
+
+std::string bit_string (std::vector <uint8_t> image,  unordered_map<uint8_t , string > hCode){
+    std::string bitString="";
+    cout << " bit string  :\n" << '\n';
+    for(auto ch : image){
+      //  std::cout << hCode.at(ch);
+        bitString += hCode.at(ch);
+    }
+    return bitString;
+}
+
+std::string byte_array (std::string bit_string){
+    std::stringstream ss(bit_string);
+    std::string byte_array ;
+    while (ss.good()) {
+        std::bitset<8> bits;
+        ss >>bits;
+        unsigned char c = char(bits.to_ulong());
+        byte_array += c;
+    }
+   // std::cout <<"byte array :   " <<byte_array<<std::endl;
+    std::cout<< "compressed size :   "<<byte_array.size()<<std::endl;
+    return byte_array;
+
 }
 
 
