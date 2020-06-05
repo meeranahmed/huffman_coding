@@ -3,12 +3,11 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string>
-#include<vector>
+#include <vector>
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include<cstdint>
-
 
 struct pgm{
 

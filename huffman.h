@@ -7,6 +7,10 @@
 #include "oop_pgm.h"
 using namespace std;
 #include <bitset>
+#include <bits/stdc++.h> 
+
+// to map each character its huffman value 
+std::unordered_map<uint8_t, string> codes; 
 
 std::unordered_map<uint8_t,int> freq_map (std::vector<uint8_t> image){
     std::unordered_map< uint8_t, int > pixelsfreq;
@@ -38,6 +42,7 @@ struct Node
     uint8_t pixel;
     int freq;
     Node *left, *right;
+
 };
 
 // function to allocate a new node
@@ -62,7 +67,7 @@ struct comp
     }
 };
 //traverse the huffman tree and store huffman codes in a map
-void encode(Node* root, string str, unordered_map<uint8_t , string> &huffmanCode)
+/*void encode(Node* root, string str, unordered_map<uint8_t , string> &huffmanCode)
 {
     if (root== nullptr)
         return;
@@ -93,7 +98,7 @@ void decode(Node* root , int &top_index , string str)
     else
         decode (root->right, top_index, str);
 }
-
+*/
 
 // Builds Huffman tree and decode the input
 std::unordered_map<uint8_t,string> buildhuffmanTree( std::unordered_map<uint8_t,int> freq_map)
@@ -127,17 +132,17 @@ std::unordered_map<uint8_t,string> buildhuffmanTree( std::unordered_map<uint8_t,
 
     //transverse the huffmantree and store the code in the map
     unordered_map<uint8_t , string > huffmanCode;
-    encode (root , "" , huffmanCode);
-
+   /* encode (root , "" , huffmanCode);
+   */
     //print huffman Code
-   /* cout << " Huffman codes are :\n" << '\n';
+    cout << " Huffman codes are :\n" << '\n';
     for (auto pair: huffmanCode){
         cout << pair.first << " " << pair.second << '\n';
-    }*/
+    }
     return huffmanCode;
 }
 
-
+  
 /*
 
     //print encoded string
@@ -156,7 +161,8 @@ std::unordered_map<uint8_t,string> buildhuffmanTree( std::unordered_map<uint8_t,
 */
 
 
-std::string bit_string (std::vector <uint8_t> image,  unordered_map<uint8_t , string > hCode){
+std::string bit_string (std::vector <uint8_t> image,  unordered_map<uint8_t , string > hCode)
+{
     std::string bitString="";
     cout << " bit string  :\n" << '\n';
     for(auto ch : image){
@@ -166,7 +172,8 @@ std::string bit_string (std::vector <uint8_t> image,  unordered_map<uint8_t , st
     return bitString;
 }
 
-std::string byte_array (std::string bit_string){
+std::string byte_array (std::string bit_string)
+{
     std::stringstream ss(bit_string);
     std::string byte_array ;
     while (ss.good()) {
@@ -181,5 +188,30 @@ std::string byte_array (std::string bit_string){
 
 }
 
+// function iterates through the encoded string s 
+// if s[i]=='1' then move to node->right 
+// if s[i]=='0' then move to node->left 
+// if leaf node append the node->data to our output string 
+string decode_file(struct Node* root, string s) 
+{ 
+    string ans = ""; 
+    struct Node* curr = root; 
+    for (int i=0;i<s.size();i++) 
+    { 
+        if (s[i] == '0') 
+           curr = curr->left; 
+        else
+           curr = curr->right; 
+  
+        // reached leaf node 
+        if (curr->left==NULL and curr->right==NULL) 
+        { 
+            ans += curr->pixel; 
+            curr = root; 
+        } 
+    } 
+    // cout<<ans<<endl; 
+    return ans+'\0'; 
+} 
 
 #endif // HUFFMAN_H
