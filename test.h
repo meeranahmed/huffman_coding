@@ -148,7 +148,11 @@ void HuffmanCodes(std::unordered_map<uint8_t,int> freq_map)
     // Populating the priority queue 
     for (auto x : freq_map) { 
         HuffmanTreeNode* newNode 
+<<<<<<< HEAD
             = new HuffmanTreeNode( x.first, x.second); 
+=======
+            = new HuffmanTreeNode(auto x: map); 
+>>>>>>> 817d99e0abcaeb4af784070149eee756cb4beee8
         pq.push(newNode); 
     } 
   
