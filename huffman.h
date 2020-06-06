@@ -164,7 +164,8 @@ std::string bit_string (std::vector <uint8_t> image,  unordered_map<uint8_t , st
     return bitString;
 }
 
-std::string byte_array (std::string bit_string){
+std::string byte_array (std::string bit_string)
+{
     std::stringstream ss(bit_string);
     std::string byte_array ;
     while (ss.good()) {
@@ -176,12 +177,13 @@ std::string byte_array (std::string bit_string){
    // std::cout <<"byte array :   " <<byte_array<<std::endl;
     std::cout<< "compressed size :   "<<byte_array.size()<<std::endl;
     return byte_array;
-
+}
     // function iterates through the encoded string s
     // if s[i]=='1' then move to node->right
     // if s[i]=='0' then move to node->left
     // if leaf node append the node->data to our output string
-    /*string decode_file(struct Node* root, string s)
+
+    std::string decode_file(struct Node* root, string s)
     {
         string ans = "";
         struct Node* curr = root;
@@ -204,6 +206,6 @@ std::string byte_array (std::string bit_string){
     }
 
 
-}*/
+
 
 #endif // HUFFMAN_H
