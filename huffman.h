@@ -139,7 +139,7 @@ std::unordered_map<uint8_t,string> buildhuffmanTree( std::unordered_map<uint8_t,
 }
 
 
-
+/*
     //print encoded string
     std::string str= "";
     for (auto ch: freq_map)
@@ -154,14 +154,14 @@ std::unordered_map<uint8_t,string> buildhuffmanTree( std::unordered_map<uint8_t,
     {
         decode (root , top_index , str);
     }
-
+*/
 
 
 std::string bit_string (std::vector <uint8_t> image,  unordered_map<uint8_t , string > hCode){
     std::string bitString="";
     //cout << " bit string  :\n" << '\n';
     for(auto ch : image){
-        //std::cout << hCode.at(ch);
+        std::cout << hCode.at(ch);
         bitString += hCode.at(ch);
     }
     return bitString;
