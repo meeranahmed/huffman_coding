@@ -16,11 +16,12 @@ int main()
     std::unordered_map<uint8_t,string> huffmanCode = buildhuffmanTree( Frequency);
     std::string string = bit_string(im.pixels_values,huffmanCode);
     std::string ByteArray = byte_array(string);
-    std::string decodedString ;
-    decodedString = decode_file(Pq.top(), bit_string(im.pixels_values,huffmanCode));
+
+    /*std::string decodedString ;
+    decodedString = decode (Pq.top(), bit_string(im.pixels_values,huffmanCode), huffmanCode );
     
     cout << "\nDecoded Huffman Data:\n" << decodedString << endl; 
-
+    */
    std::ofstream file;
    file.open("serialize");
    file<<"p5"<<"\n"<<im.cols<<" "<<im.rows<<"\n"<<im.maxVal<<"\n"<<bit_string(im.pixels_values,huffmanCode);

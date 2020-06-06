@@ -75,6 +75,7 @@ void encode(Node* root, string str, unordered_map<uint8_t , string> &huffmanCode
     encode(root->right , str + "1", huffmanCode);
 
 }
+
 //traverse the huffman tree and decode the encoded string
 void decode(Node* root , int &top_index , string str)
 {
@@ -127,38 +128,40 @@ std::unordered_map<uint8_t,string> buildhuffmanTree( std::unordered_map<uint8_t,
 
     //transverse the huffmantree and store the code in the map
     unordered_map<uint8_t , string > huffmanCode;
-    encode (root , "" , huffmanCode);
 
     //print huffman Code
-   /* cout << " Huffman codes are :\n" << '\n';
+   /*cout << " Huffman codes are :\n" << '\n';
     for (auto pair: huffmanCode){
         cout << pair.first << " " << pair.second << '\n';
     }*/
     return huffmanCode;
+     encode (root , "" , huffmanCode);
 }
 
 
-/*
+
     //print encoded string
     std::string str= "";
-    for (auto ch: freq_map){
+    for (auto ch: freq_map)
+    {
         str += ch.second;
     }
-    cout << " \nEncoded string is :n\ " << str <<std::endl;
+    std::cout << " \nEncoded string is :n\ " << str <<std::endl;
     //transverse the huffmantree again and decode the encoded string
     int top_index =-1;
-    cout << " \nDecoded string is : \n ";
-    while ( top_index < (int)str.size() - 2){
+    std::cout << " \nDecoded string is : \n ";
+    while ( top_index < (int)str.size() - 2)
+    {
         decode (root , top_index , str);
     }
-*/
+
 
 
 std::string bit_string (std::vector <uint8_t> image,  unordered_map<uint8_t , string > hCode){
     std::string bitString="";
-    cout << " bit string  :\n" << '\n';
+    //cout << " bit string  :\n" << '\n';
     for(auto ch : image){
-      //  std::cout << hCode.at(ch);
+        //std::cout << hCode.at(ch);
         bitString += hCode.at(ch);
     }
     return bitString;
@@ -182,8 +185,8 @@ std::string byte_array (std::string bit_string)
     // if s[i]=='1' then move to node->right
     // if s[i]=='0' then move to node->left
     // if leaf node append the node->data to our output string
-
-    std::string decode_file(struct Node* root, string s)
+/*
+    std::string decode_file(struct Node* root, string s, unordered_map<uint8_t , string> &huffmanCode)
     {
         string ans = "";
         struct Node* curr = root;
@@ -204,7 +207,7 @@ std::string byte_array (std::string bit_string)
         // cout<<ans<<endl;
         return ans+'\0';
     }
-
+*/
 
 
 
